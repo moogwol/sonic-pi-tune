@@ -2,6 +2,10 @@
 # Set the BPM for the track
 use_bpm 180
 
+# Create a variable that controls the melody, bassline and chords
+# Set the current root note for the track
+root = 45
+
 # Make a beat
 live_loop :beats do
   sample :bd_zome
@@ -18,5 +22,16 @@ end
 
 # Make a melody
 # Make a bassline
+define :bass_notes do |root|
+  use_synth :chipbass
+  sleep 1
+  play root
+  sleep 1
+end
 # Make a chord
-# Create a variable that controls the melody, bassline and chords
+
+
+# Play the bass-line
+live_loop :bass_line do
+  bass_notes root
+end
