@@ -1,0 +1,22 @@
+# Create a tune where the melody and bassline follow the chord changes
+# Set the BPM for the track
+use_bpm 180
+
+# Make a beat
+live_loop :beats do
+  sample :bd_zome
+  sleep 1
+  sample :drum_cymbal_closed
+  sleep 1
+  sample :bd_zome
+  sample :drum_snare_soft
+  sleep 1
+  sample :drum_cymbal_closed
+  sleep 1
+end
+
+
+# Make a melody
+# Make a bassline
+# Make a chord
+# Create a variable that controls the melody, bassline and chords
