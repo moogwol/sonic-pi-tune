@@ -1,10 +1,10 @@
 # Create a tune where the melody and bassline follow the chord changes
 # Set the BPM for the track
-use_bpm 180
+use_bpm 250
 
 # Create a variable that controls the melody, bassline and chords
 # Set the current root note for the track
-root = 45
+root_note = [60, 65, 58][2]
 
 # Make a beat
 live_loop :beats do
@@ -21,17 +21,55 @@ end
 
 
 # Make a melody
+define :melody_notes do |root|
+  use_synth :beep
+  play root
+  sleep 1
+  play root+5
+  sleep 1
+  play root-2
+  sleep 1
+  play root+7
+  sleep 1
+end
+
 # Make a bassline
 define :bass_notes do |root|
   use_synth :chipbass
   sleep 1
-  play root
+  play root-24
   sleep 1
 end
 # Make a chord
+define :chord_notes do |root|
+  use_synth :supersaw
+  volume = 2
+  sleep 1.5
+  play root
+  play root+5,amp: volume
+  play root-2,amp: volume
+  play root+7,amp: volume
+  sleep 1.5
+  play root
+  play root+5,amp: volume
+  play root-2,amp: volume
+  play root+7,amp: volume
+  sleep 1
+  
+end
 
 
-# Play the bass-line
-live_loop :bass_line do
-  bass_notes root
+# Play the melody
+live_loop :melody_player do
+  melody_notes root_note
+end
+
+# Play the chords
+live_loop :chord_player do
+  chord_notes root_note
+end
+
+# Play the bassline
+live_loop :bass_player do
+  bass_notes root_note
 end
