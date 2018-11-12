@@ -1,10 +1,9 @@
 # Create a tune where the melody and bassline follow the chord changes
 # Set the BPM for the track
-use_bpm 250
+use_bpm 350
 
 # Create a variable that controls the melody, bassline and chords
 # Set the current root note for the track
-
 root_note = (ring 60,60,60,60,
              63,63,63,63,
              58,58,58,58,
@@ -30,15 +29,10 @@ end
 # Make a melody
 define :melody_notes do |root|
   use_synth :chiplead
-  volume = 1.5
-  play root,amp: volume
-  sleep 1
-  play root+4,amp: volume
-  sleep 1
-  play root-3,amp: volume
-  sleep 1
-  play root+6,amp: volume
-  sleep 1
+  with_fx :reverb do
+    play (ring root, root+5, root-12, root+7, root-5).tick # Play around with these numbers
+    sleep 1                                               # to get interesting arpeggios
+  end
 end
 
 # Make a bassline
@@ -49,22 +43,15 @@ define :bass_notes do |root|
     play root-24, amp: 2
     sleep 1
   end
-  
 end
-
-
-
 
 
 # Play the melody
+#stop
 live_loop :melody_player do
-  melody_notes root_note.tick
+  melody_notes root_note.tick # Using .tick cycles through the root_note list above
 end
 
-# Play the chords
-#live_loop :chord_player do
-#  chord_notes root_note.tick
-#end
 
 # Play the bassline
 live_loop :bass_player do
