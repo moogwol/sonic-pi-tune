@@ -4,72 +4,69 @@ use_bpm 250
 
 # Create a variable that controls the melody, bassline and chords
 # Set the current root note for the track
-root_note = [60, 65, 58][2]
+
+root_note = (ring 60,60,60,60,
+             63,63,63,63,
+             58,58,58,58,
+             65,65,65,65)
+
 
 # Make a beat
 live_loop :beats do
   sample :bd_zome
   sleep 1
+  #sample :bd_zome
   sample :drum_cymbal_closed
   sleep 1
   sample :bd_zome
-  sample :drum_snare_soft
+  sample :drum_snare_soft, amp: 2
   sleep 1
   sample :drum_cymbal_closed
+  #sample :bd_zome
   sleep 1
 end
 
 
 # Make a melody
 define :melody_notes do |root|
-  use_synth :beep
-  play root
+  use_synth :chiplead
+  volume = 1.5
+  play root,amp: volume
   sleep 1
-  play root+5
+  play root+4,amp: volume
   sleep 1
-  play root-2
+  play root-3,amp: volume
   sleep 1
-  play root+7
+  play root+6,amp: volume
   sleep 1
 end
 
 # Make a bassline
 define :bass_notes do |root|
-  use_synth :chipbass
-  sleep 1
-  play root-24
-  sleep 1
-end
-# Make a chord
-define :chord_notes do |root|
-  use_synth :supersaw
-  volume = 2
-  sleep 1.5
-  play root
-  play root+5,amp: volume
-  play root-2,amp: volume
-  play root+7,amp: volume
-  sleep 1.5
-  play root
-  play root+5,amp: volume
-  play root-2,amp: volume
-  play root+7,amp: volume
-  sleep 1
+  2.times do
+    use_synth :chipbass
+    sleep 1
+    play root-24, amp: 2
+    sleep 1
+  end
   
 end
 
 
+
+
+
 # Play the melody
 live_loop :melody_player do
-  melody_notes root_note
+  melody_notes root_note.tick
 end
 
 # Play the chords
-live_loop :chord_player do
-  chord_notes root_note
-end
+#live_loop :chord_player do
+#  chord_notes root_note.tick
+#end
 
 # Play the bassline
 live_loop :bass_player do
-  bass_notes root_note
+  bass_notes root_note.tick
 end
